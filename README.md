@@ -1,73 +1,35 @@
-# React + TypeScript + Vite
+## Project Structure Overview
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project uses a **feature-based (module-based)** architecture.  
+Instead of grouping files by type (components, pages, services), features are organized into self-contained modules.  
+This makes the project easier to scale, refactor, debug, and maintain.
 
-Currently, two official plugins are available:
+### Folder Responsibilities
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+| Folder            | Purpose                                                                                                                               |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| **core**          | Contains global app setup: router configuration, global store, API client, environment variables. No UI here.                         |
+| **components/ui** | Reusable presentational UI components (e.g., Button, Input). They do **not** contain business logic.                                  |
+| **shared**        | Utilities and hooks that are not tied to any specific feature (e.g., `useDebounce`, `formatDate`).                                    |
+| **modules**       | Each module represents a feature or domain (e.g., auth, set, quiz). A module can have its own pages, components, services and routes. |
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Routing Concept
 
-## Expanding the ESLint configuration
+Routing is defined **per module** and then combined into a single router.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Each module exports its own route definitions.
+- The `core/router` folder collects these definitions and creates the central router.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Key Principles
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- UI that **everyone can reuse** → goes into `components/ui`
+- UI that **belongs to a specific feature** → goes into `modules/<feature>/components`
+- Business logic **never** goes into `components/ui`
+- Each module should be **self-contained** (pages + components + services + routes)
+- `core` contains only **infrastructure**, not feature logic
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
