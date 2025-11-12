@@ -22,13 +22,13 @@ const Header = () => {
 
         <nav className="hidden md:flex items-center gap-6">
           <Link
-            to="/flashcard"
+            to="/collections"
             className={cn(
               'text-foreground hover:text-primary transition-colors font-medium',
-              isActive('/flashcard') && 'text-primary',
+              isActive('/collections') && 'text-primary',
             )}
           >
-            Flashcards
+            Collections
           </Link>
           <Link
             to="/quiz"

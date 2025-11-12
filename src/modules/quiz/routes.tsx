@@ -6,7 +6,7 @@ export const quizRoutes = [
     element: <Layout />,
     children: [
       {
-        path: '/quiz',
+        path: '/collections/:id/quiz',
         element: <Quiz />,
       },
     ],

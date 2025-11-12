@@ -3,7 +3,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, ArrowRight, RotateCcw } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import type { Flashcard } from '../pages/flashcard';
+import type { Flashcard } from '../types/flashcard';
 type FlashcardPracticeProps = {
   flashcards: Flashcard[];
 };
@@ -46,12 +46,12 @@ const FlashcardPractice = ({ flashcards }: FlashcardPracticeProps) => {
             Card {currentIndex + 1} of {flashcards.length}
           </p>
         </div>
-        <div className="flex flex-col items-end gap-1">
+        {/* <div className="flex flex-col items-end gap-1">
           <div className="px-4 py-2 rounded-full bg-primary/10 text-primary font-semibold text-sm">
             {currentCard.language}
           </div>
           <div className="text-xs text-muted-foreground">{currentCard.category}</div>
-        </div>
+        </div> */}
       </div>
 
       <div className="perspective-1000">
@@ -71,7 +71,7 @@ const FlashcardPractice = ({ flashcards }: FlashcardPracticeProps) => {
             style={{ backfaceVisibility: 'hidden' }}
           >
             <div className="text-center space-y-4">
-              <p className="text-4xl font-bold text-foreground">{currentCard.front}</p>
+              <p className="text-4xl font-bold text-foreground">{currentCard.term}</p>
               <p className="text-muted-foreground">Click to reveal</p>
             </div>
           </div>
@@ -84,7 +84,7 @@ const FlashcardPractice = ({ flashcards }: FlashcardPracticeProps) => {
             }}
           >
             <div className="text-center space-y-4">
-              <p className="text-4xl font-bold">{currentCard.back}</p>
+              <p className="text-4xl font-bold">{currentCard.definition}</p>
               <p className="text-primary-foreground/80">Click to flip back</p>
             </div>
           </div>

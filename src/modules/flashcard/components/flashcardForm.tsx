@@ -21,32 +21,32 @@ import {
 import { useToast } from '@/shared/hooks/useToast';
 
 const flashcardSchema = z.object({
-  front: z
+  term: z
     .string()
     .trim()
-    .min(1, { message: 'Front text is required' })
-    .max(200, { message: 'Front text must be less than 200 characters' }),
-  back: z
+    .min(1, { message: 'term text is required' })
+    .max(200, { message: 'term text must be less than 200 characters' }),
+  definition: z
     .string()
     .trim()
     .min(1, { message: 'Back text is required' })
     .max(200, { message: 'Back text must be less than 200 characters' }),
-  language: z.string().min(1, { message: 'Please select a language' }),
-  category: z
-    .string()
-    .trim()
-    .min(1, { message: 'Category is required' })
-    .max(50, { message: 'Category must be less than 50 characters' }),
+  // language: z.string().min(1, { message: 'Please select a language' }),
+  // category: z
+  //   .string()
+  //   .trim()
+  //   .min(1, { message: 'Category is required' })
+  //   .max(50, { message: 'Category must be less than 50 characters' }),
 });
 
 type FlashcardFormData = z.infer<typeof flashcardSchema>;
 
-interface FlashcardFormProps {
+type FlashcardFormProps = {
   onSubmit: (data: FlashcardFormData) => void;
   onCancel: () => void;
   initialData?: Partial<FlashcardFormData>;
   isEditing?: boolean;
-}
+};
 
 const languages = [
   'French',
@@ -72,10 +72,10 @@ const FlashcardForm = ({
   const form = useForm<FlashcardFormData>({
     resolver: zodResolver(flashcardSchema),
     defaultValues: {
-      front: initialData?.front || '',
-      back: initialData?.back || '',
-      language: initialData?.language || '',
-      category: initialData?.category || '',
+      term: initialData?.term || '',
+      definition: initialData?.definition || '',
+      // language: initialData?.language || '',
+      // category: initialData?.category || '',
     },
   });
 
@@ -96,10 +96,10 @@ const FlashcardForm = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <FormField
             control={form.control}
-            name="front"
+            name="term"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Front (Question)</FormLabel>
+                <FormLabel>term (Question)</FormLabel>
                 <FormControl>
                   <Input placeholder="Enter the word or phrase" {...field} className="text-base" />
                 </FormControl>
@@ -110,7 +110,7 @@ const FlashcardForm = ({
 
           <FormField
             control={form.control}
-            name="back"
+            name="definition"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Back (Answer)</FormLabel>
@@ -122,7 +122,7 @@ const FlashcardForm = ({
             )}
           />
 
-          <FormField
+          {/* <FormField
             control={form.control}
             name="language"
             render={({ field }) => (
@@ -145,9 +145,9 @@ const FlashcardForm = ({
                 <FormMessage />
               </FormItem>
             )}
-          />
+          /> */}
 
-          <FormField
+          {/* <FormField
             control={form.control}
             name="category"
             render={({ field }) => (
@@ -163,7 +163,7 @@ const FlashcardForm = ({
                 <FormMessage />
               </FormItem>
             )}
-          />
+          /> */}
         </div>
 
         <div className="flex gap-3 justify-end pt-4">

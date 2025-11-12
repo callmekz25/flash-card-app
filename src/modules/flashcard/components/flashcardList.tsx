@@ -13,13 +13,13 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Edit, Trash2, Languages } from 'lucide-react';
 import { useToast } from '@/shared/hooks/useToast';
-import type { Flashcard } from '../pages/flashcard';
+import type { Flashcard } from '../types/flashcard';
 
-interface FlashcardListProps {
+type FlashcardListProps = {
   flashcards: Flashcard[];
   onEdit: (card: Flashcard) => void;
   onDelete: (id: string) => void;
-}
+};
 
 const FlashcardList = ({ flashcards, onEdit, onDelete }: FlashcardListProps) => {
   const [deleteId, setDeleteId] = useState<string | null>(null);
@@ -55,11 +55,11 @@ const FlashcardList = ({ flashcards, onEdit, onDelete }: FlashcardListProps) => 
               <div className="space-y-3">
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex-1 min-w-0">
-                    <div className="text-xs text-muted-foreground mb-1">
+                    {/* <div className="text-xs text-muted-foreground mb-1">
                       {card.language} • {card.category}
-                    </div>
-                    <div className="font-semibold text-foreground truncate">{card.front}</div>
-                    <div className="text-sm text-muted-foreground truncate">{card.back}</div>
+                    </div> */}
+                    <div className="font-semibold text-foreground truncate">{card.term}</div>
+                    <div className="text-sm text-muted-foreground truncate">{card.definition}</div>
                   </div>
                 </div>
 
